@@ -10,7 +10,15 @@
 
 ## FYI: below is a boilerplate README from BitBucket ##
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Steps to run the project
+
+1. Install docker ce
+2. Install docker compose
+3. Change directory into soen487-w18-team01
+4. Run:
+```
+docker-compose up
+```
 
 ### What is this repository for? ###
 
