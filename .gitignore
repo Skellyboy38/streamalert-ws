@@ -10,3 +10,5 @@
 doc/report/project-report.pdf
 *.tps
 Thumbs.db
+tomcat/StreamAlert/build/
+.metadata/
