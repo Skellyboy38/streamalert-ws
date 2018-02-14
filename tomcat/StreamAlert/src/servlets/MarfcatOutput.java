@@ -16,19 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import marfcat.Dataset;
+import marfcat.Report;
 
 /**
  * Servlet implementation class MarfcatInput
  */
-@WebServlet("/MarfcatInput")
-public class MarfcatInput extends HttpServlet {
+@WebServlet("/MarfcatOutput")
+public class MarfcatOutput extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MarfcatInput() {
+    public MarfcatOutput() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +39,7 @@ public class MarfcatInput extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ServletContext context = request.getServletContext();
-		InputStream in = context.getResourceAsStream("/WEB-INF/xml/marfcat-in.xml");
+		InputStream in = context.getResourceAsStream("/WEB-INF/xml/marfcat-out.xml");
 		
 		Logger logger = Logger.getLogger("XmlParser");
 		BasicConfigurator.configure();
@@ -48,17 +48,14 @@ public class MarfcatInput extends HttpServlet {
 		try {
 			s = new Scanner(in).useDelimiter("\\A");
 			String xmlString = s.hasNext() ? s.next() : "";
-			Dataset ds = XmlParser.unmarshal(xmlString, Dataset.class);
+			Report rp = XmlParser.unmarshal(xmlString, Report.class);
 			
-			request.setAttribute("dataset-generated-by", ds.generatedBy);
-			request.setAttribute("dataset-generated-on", ds.generatedOn);
-			request.setAttribute("description-file-type-tool", ds.description.fileTypeTool);
-			request.setAttribute("description-find-tool", ds.description.findTool);
-			request.setAttribute("description-marfcat-tool", ds.description.marfTool);
-			request.setAttribute("files", ds.files);
+			request.setAttribute("report-tool_name", rp.toolName);
+			request.setAttribute("report-tool_version", rp.toolVersion);
+			request.setAttribute("weaknesses", rp.weaknesses);
 			
 			response.setContentType("text/html");
-	        request.getRequestDispatcher("/WEB-INF/jsp/marfcat-in.jsp").forward(request, response);
+	        request.getRequestDispatcher("/WEB-INF/jsp/marfcat-out.jsp").forward(request, response);
 		}
 		catch(Exception e) {
 			response.setContentType("text/html");
