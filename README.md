@@ -8,10 +8,6 @@
 
 * `doc/report/project-report.tex` is the most documented example template in LaTeX, single column, more readable. To be able to compile LaTeX report, install and configure [MiKTeX](http://miktex.org) first (LaTeX backend compiler and styles and packages), then [TeXnicCenter](http://texniccenter.org) (GUI front-end to MikTeX, it will find MikTeX installation when installed after MikTeX). Open `project-report.tcp` project file for TeXnicCenter and compile it using F7 3 times; F5 to preview the PDF.
 
-## FYI: below is a boilerplate README from BitBucket ##
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
 * Quick summary
@@ -21,7 +17,23 @@ This README would normally document whatever steps are necessary to get your app
 ### How do I get set up? ###
 
 * Summary of set up
+
+Docker
+Apache Tomcat
+nginx
+
 * Configuration
+
+1. Install docker ce
+2. Install docker compose
+3. Change directory into soen487-w18-team01
+4. Run:
+```
+docker-compose up
+```
+5. Export StreamAlert.war file:
+[StreamAlert](https://i.imgur.com/g4Ni3Wc.png)
+
 * Dependencies
 * Database configuration
 * How to run tests
