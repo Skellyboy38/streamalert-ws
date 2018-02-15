@@ -10,15 +10,18 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class XmlParser {
-	
+
 	public static <T> String marshal(Object toMarshal, Class<T> clazz) {
-		
+
 		StringWriter sw = new StringWriter();
 		Logger logger = Logger.getLogger("XmlParser");
 		BasicConfigurator.configure();
-		
+
 		try {
 			T castedObject = (T)toMarshal;
 			JAXBContext jaxbContext = JAXBContext.newInstance(castedObject.getClass());
@@ -39,16 +42,16 @@ public class XmlParser {
 			logger.info(sw.toString());
 			return null;
 		}
-		
+
 	}
-	
+
 	public static <T> T unmarshal(String xmlToUnmarshal, Class<T> clazz) {
-		
+
 		StringReader sr = new StringReader(xmlToUnmarshal);
 		StringWriter sw = new StringWriter();
 		Logger logger = Logger.getLogger("XmlParser");
 		BasicConfigurator.configure();
-		
+
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -67,4 +70,24 @@ public class XmlParser {
 			return null;
 		}
 	}
+
+	public static String printNode(NodeList nodeList) {
+		String toRet = "";
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node nodes = nodeList.item(i);
+			if (nodes.getNodeType() == Node.ELEMENT_NODE) {
+				if (nodes.hasAttributes()) {
+					NamedNodeMap nodeMap = nodes.getAttributes();
+					for (int j = 0; j < nodeMap.getLength(); j++) {
+						Node node = nodeMap.item(j);
+						toRet = toRet + node.getNodeName()+":"+node.getNodeValue() + "<br>";
+					}
+				}
+				if (nodes.hasChildNodes()) {
+					toRet += printNode(nodes.getChildNodes());
+				}
+			}
+		}
+		return toRet;
+	}     
 }
