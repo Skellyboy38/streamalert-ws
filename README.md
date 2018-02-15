@@ -16,13 +16,13 @@
 
 ### How do I get set up? ###
 
-* Summary of set up
+##### Summary of set up #####
 
 Docker
 Apache Tomcat
 nginx
 
-* Configuration
+##### Configuration #####
 
 1. Install docker ce
 2. Install docker compose
@@ -34,10 +34,41 @@ docker-compose up
 5. Export StreamAlert.war file:
 [StreamAlert](https://i.imgur.com/g4Ni3Wc.png)
 
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+##### Dependencies #####
+##### Database configuration #####
+##### How to run tests #####
+##### How to view parsed data sources (PM1.1) #####
+
+Request a HTTP GET to any of the following:
+`/StreamAlert/MarfcatInput`
+`/StreamAlert/MarfcatOuput`
+`/StreamAlert/NeuralNetwork`
+`/StreamAlert/WsdlParser`
+`/StreamAlert/LeDevoir`
+
+##### How to use XML SOAP Service (PM1.2) #####
+
+Request a HTTP POST to `/StreamAlert/XmlService` with the following SOAP message
+
+```
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Body>
+		<theRequest>
+			<type>neural-network</type>
+			<uri></uri>
+		</theRequest>
+	</soapenv:Body>
+</soapenv:Envelope>
+```
+The following types are supported:
+
+1. marfcat-input
+2. marfcat-output
+3. le-devoir
+4. neural-network
+5. wsdl
+
+##### Deployment instructions #####
 
 ### Contribution guidelines ###
 
