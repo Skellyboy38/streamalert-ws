@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
 import marfcat.Dataset;
 
 /**
@@ -30,7 +27,6 @@ public class MarfcatInput extends HttpServlet {
      */
     public MarfcatInput() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -40,9 +36,6 @@ public class MarfcatInput extends HttpServlet {
 		
 		ServletContext context = request.getServletContext();
 		InputStream in = context.getResourceAsStream("/WEB-INF/xml/marfcat-in.xml");
-		
-		Logger logger = Logger.getLogger("XmlParser");
-		BasicConfigurator.configure();
 		Scanner s = null;
 		
 		try {
@@ -62,14 +55,57 @@ public class MarfcatInput extends HttpServlet {
 		}
 		catch(Exception e) {
 			response.setContentType("text/html");
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			request.setAttribute("message", sw.toString());
+			request.setAttribute("message", e.getMessage());
 	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
 		}
 		finally {
 			s.close();
+		}
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uri = (String) request.getAttribute("uri");
+		String xmlString = "";
+		
+		if(uri == null || uri.equals("")) {
+			ServletContext context = request.getServletContext();
+			InputStream in = context.getResourceAsStream("/WEB-INF/xml/marfcat-in.xml");
+			Scanner s = null;
+			s = new Scanner(in).useDelimiter("\\A");
+			xmlString = s.hasNext() ? s.next() : "";
+			s.close();
+		}
+		else {
+			try {
+				xmlString = Requests.get(uri);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			Dataset ds = XmlParser.unmarshal(xmlString, Dataset.class);
+			request.setAttribute("dataset-generated-by", ds.generatedBy);
+			request.setAttribute("dataset-generated-on", ds.generatedOn);
+			request.setAttribute("description-file-type-tool", ds.description.fileTypeTool);
+			request.setAttribute("description-find-tool", ds.description.findTool);
+			request.setAttribute("description-marfcat-tool", ds.description.marfTool);
+			request.setAttribute("files", ds.files);
+			response.setContentType("text/html");
+	        request.getRequestDispatcher("/WEB-INF/jsp/marfcat-in.jsp").forward(request, response);
+		}
+		catch(NullPointerException e) {
+			response.setContentType("text/html");
+			request.setAttribute("message", "Cannot parse xml located at: " + uri);
+	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+		}
+		catch(Exception e) {
+			response.setContentType("text/html");
+			request.setAttribute("message", e.getMessage());
+	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
 		}
 	}
 }

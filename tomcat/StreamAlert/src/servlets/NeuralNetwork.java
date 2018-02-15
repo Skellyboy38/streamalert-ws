@@ -39,7 +39,7 @@ public class NeuralNetwork extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ServletContext context = request.getServletContext();
-		InputStream in = context.getResourceAsStream("/WEB-INF/xml/test1.xml");
+		InputStream in = context.getResourceAsStream("/WEB-INF/xml/neural-network.xml");
 		Scanner s = null;
 		try {
 			s = new Scanner(in).useDelimiter("\\A");
@@ -53,9 +53,54 @@ public class NeuralNetwork extends HttpServlet {
 			response.setContentType("text/html");
 	        request.getRequestDispatcher("/WEB-INF/jsp/neural-network.jsp").forward(request, response);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			s.close();
+		}
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String uri = (String) request.getAttribute("uri");
+		String xmlString = "";
+		
+		if(uri == null || uri.equals("")) {
+			ServletContext context = request.getServletContext();
+			InputStream in = context.getResourceAsStream("/WEB-INF/xml/neural-network.xml");
+			Scanner s = null;
+			s = new Scanner(in).useDelimiter("\\A");
+			xmlString = s.hasNext() ? s.next() : "";
+			s.close();
+		}
+		else {
+			try {
+				xmlString = Requests.get(uri);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			Net neuralNetwork = XmlParser.unmarshal(xmlString, Net.class);
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(neuralNetwork);
+			request.setAttribute("neuralNetwork", json);
+			response.setContentType("text/html");
+	        request.getRequestDispatcher("/WEB-INF/jsp/neural-network.jsp").forward(request, response);
+		} 
+		catch(NullPointerException e) {
+			response.setContentType("text/html");
+			request.setAttribute("message", "Cannot parse xml located at: " + uri);
+	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+		}
+		catch(Exception e) {
+			response.setContentType("text/html");
+			request.setAttribute("message", e.getMessage());
+	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
 		}
 	}
 
