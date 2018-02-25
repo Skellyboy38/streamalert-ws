@@ -71,6 +71,28 @@ The following types are supported:
 
 ##### Deployment instructions #####
 
+https://www.streamalert.io/getting-started.html
+
+###### What are schemas?
+Also known as logs, schemas define structures which are used to analyze records.
+Define schemas in `conf/logs.json`
+
+###### How to define a rule:
+Create a .py file under `rules/community/{rule_folder}/`
+
+###### How to define a test:
+Create a .json file under `tests/integration/rules/{rule_folder}/`
+
+###### How to push tests, schemas, rules to AWS?
+Depending on the function we want to push updates to, use: 
+`python manage.py lambda deploy --processor {function}`
+
+where `{function}` can be `rule` or `alert`
+
+###### How to test a rule:
+`python manage.py live-test --cluster soen487.streamalerts --rules send_xml_to_slack`
+
+
 ### Contribution guidelines ###
 
 * Writing tests
