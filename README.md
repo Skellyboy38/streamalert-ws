@@ -28,6 +28,7 @@ nginx
 2. Install docker compose
 3. Change directory into soen487-w18-team01
 4. Run:
+
 ```
 docker-compose up
 ```
