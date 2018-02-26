@@ -28,6 +28,7 @@ nginx
 2. Install docker compose
 3. Change directory into soen487-w18-team01
 4. Run:
+
 ```
 docker-compose up
 ```
@@ -68,7 +69,33 @@ The following types are supported:
 4. neural-network
 5. wsdl
 
+##### How to use Stream Alert (PM1.3) #####
+
 ##### Deployment instructions #####
+
+https://www.streamalert.io/getting-started.html
+
+Outputs can be found in our `#streamalert` channel @ `soen487-w18-team01.slack.com`
+
+###### What are schemas?
+Also known as logs, schemas define structures which are used to analyze records.
+Define schemas in `conf/logs.json`
+
+###### How to define a rule:
+Create a .py file under `rules/community/{rule_folder}/`
+
+###### How to define a test:
+Create a .json file under `tests/integration/rules/{rule_folder}/`
+
+###### How to push tests, schemas, rules to AWS?
+Depending on the function we want to push updates to, use: 
+`python manage.py lambda deploy --processor {function}`
+
+where `{function}` can be `rule` or `alert`
+
+###### How to test a rule:
+`python manage.py live-test --cluster produ --rules send_xml_to_slack`
+
 
 ### Contribution guidelines ###
 
