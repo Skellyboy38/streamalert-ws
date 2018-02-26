@@ -16,28 +16,86 @@
 
 ### How do I get set up? ###
 
-* Summary of set up
+##### Summary of set up #####
 
 Docker
 Apache Tomcat
 nginx
 
-* Configuration
+##### Configuration #####
 
 1. Install docker ce
 2. Install docker compose
 3. Change directory into soen487-w18-team01
 4. Run:
+
 ```
 docker-compose up
 ```
 5. Export StreamAlert.war file:
 [StreamAlert](https://i.imgur.com/g4Ni3Wc.png)
 
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+##### Dependencies #####
+##### Database configuration #####
+##### How to run tests #####
+##### How to view parsed data sources (PM1.1) #####
+
+Request a HTTP GET to any of the following:
+`/StreamAlert/MarfcatInput`
+`/StreamAlert/MarfcatOuput`
+`/StreamAlert/NeuralNetwork`
+`/StreamAlert/WsdlParser`
+`/StreamAlert/LeDevoir`
+
+##### How to use XML SOAP Service (PM1.2) #####
+
+Request a HTTP POST to `/StreamAlert/XmlService` with the following SOAP message
+
+```
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Body>
+		<theRequest>
+			<type>neural-network</type>
+			<uri></uri>
+		</theRequest>
+	</soapenv:Body>
+</soapenv:Envelope>
+```
+The following types are supported:
+
+1. marfcat-input
+2. marfcat-output
+3. le-devoir
+4. neural-network
+5. wsdl
+
+##### How to use Stream Alert (PM1.3) #####
+
+##### Deployment instructions #####
+
+https://www.streamalert.io/getting-started.html
+
+Outputs can be found in our `#streamalert` channel @ `soen487-w18-team01.slack.com`
+
+###### What are schemas?
+Also known as logs, schemas define structures which are used to analyze records.
+Define schemas in `conf/logs.json`
+
+###### How to define a rule:
+Create a .py file under `rules/community/{rule_folder}/`
+
+###### How to define a test:
+Create a .json file under `tests/integration/rules/{rule_folder}/`
+
+###### How to push tests, schemas, rules to AWS?
+Depending on the function we want to push updates to, use: 
+`python manage.py lambda deploy --processor {function}`
+
+where `{function}` can be `rule` or `alert`
+
+###### How to test a rule:
+`python manage.py live-test --cluster produ --rules send_xml_to_slack`
+
 
 ### Contribution guidelines ###
 
