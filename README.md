@@ -69,9 +69,13 @@ The following types are supported:
 4. neural-network
 5. wsdl
 
+##### How to use Stream Alert (PM1.3) #####
+
 ##### Deployment instructions #####
 
 https://www.streamalert.io/getting-started.html
+
+Outputs can be found in our `#streamalert` channel @ `soen487-w18-team01.slack.com`
 
 ###### What are schemas?
 Also known as logs, schemas define structures which are used to analyze records.
@@ -90,7 +94,7 @@ Depending on the function we want to push updates to, use:
 where `{function}` can be `rule` or `alert`
 
 ###### How to test a rule:
-`python manage.py live-test --cluster soen487.streamalerts --rules send_xml_to_slack`
+`python manage.py live-test --cluster produ --rules send_xml_to_slack`
 
 
 ### Contribution guidelines ###
