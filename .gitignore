@@ -19,3 +19,4 @@ tomcat/war/
 # Compiled class file
 *.class
 .classpath
+/PM2CustomerDB/nbproject/private/
