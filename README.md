@@ -96,6 +96,20 @@ where `{function}` can be `rule` or `alert`
 ###### How to test a rule:
 `python manage.py live-test --cluster produ --rules send_xml_to_slack`
 
+##### How to run RESTful Web Services (PM2.1 and 2.2) #####
+
+##### CustomerDB #####
+
+1- Run PM2CustomerDB REStful Web Service
+2- Run PM2CustoemrDB Client
+3- Navigate to `http://localhost:8080/PM2CustomerDBClient/pm2.html`
+4- Test Customer Table, Discount and FindByState
+
+##### Temperature #####
+
+1- Run PM2Temperature Project
+3- Navigate to `http://localhost:8080/PM2Temperature/pm2_2_c.html`
+4- Test GET and PUT actions
 
 ### Contribution guidelines ###
 
