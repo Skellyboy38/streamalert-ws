@@ -1482,27 +1482,42 @@
       }
     }
   },
-  "test-data": {
-    "parser": "json",
-    "schema": {
-      "key1": "string",
-      "key2": "integer",
-      "key3": "boolean",
-      "key4": "float",
-      "key5": [],
-      "key6": {}
-    }
-  },
   "neural-network": {
     "parser": "json",
     "schema": {
-      "layer": {}
+      "neuron": [],
+      "type": "string",
+      "index": "integer"
+    },
+    "configuration": {
+      "json_path": "layer[*]"
     }
   },
-  "neural-network:events": {
+  "marfcat-input": {
     "parser": "json",
     "schema": {
-      "layer": {}
+      "generatedBy": "string",
+      "generatedOn": "string",
+      "description": {
+        "fileTypeTool": "string",
+        "findTool": "string",
+        "marfTool": "string"
+      },
+      "files": []
+    }
+  },
+  "marfcat-output": {
+    "parser": "json",
+    "schema": {
+      "toolName": "string",
+      "toolVersion": "string",
+      "weaknesses": []
+    }
+  },
+  "le-devoir": {
+    "parser": "json",
+    "schema": {
+      "titles": []
     }
   }
 }
