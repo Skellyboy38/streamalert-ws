@@ -38,7 +38,7 @@ docker-compose up
 ##### Dependencies #####
 ##### Database configuration #####
 ##### How to run tests #####
-##### How to view parsed data sources (PM1.1) #####
+### How to view parsed data sources (PM1.1) ###
 
 Request a HTTP GET to any of the following:
 `/StreamAlert/MarfcatInput`
@@ -47,7 +47,7 @@ Request a HTTP GET to any of the following:
 `/StreamAlert/WsdlParser`
 `/StreamAlert/LeDevoir`
 
-##### How to use XML SOAP Service (PM1.2) #####
+### How to use XML SOAP Service (PM1.2) ###
 
 Request a HTTP POST to `/StreamAlert/XmlService` with the following SOAP message
 
@@ -69,7 +69,7 @@ The following types are supported:
 4. neural-network
 5. wsdl
 
-##### How to use Stream Alert (PM1.3) #####
+### How to use Stream Alert (PM1.3) ###
 
 ##### Deployment instructions #####
 
@@ -94,22 +94,28 @@ Depending on the function we want to push updates to, use:
 where `{function}` can be `rule` or `alert`
 
 ###### How to test a rule:
-`python manage.py live-test --cluster produ --rules send_xml_to_slack`
+`python manage.py live-test --cluster prod --rules send_xml_to_slack`
+`python manage.py lambda test --processor rule --test-rules send_nn_to_slack --debug`
 
-##### How to run RESTful Web Services (PM2.1 and 2.2) #####
+###### How is our SOAP XML service sending data to Slack
+When sending a POST request for any of the supported types, an upload of resource is done to our Amazon Web Service S3 bucket.
+
+### How to run RESTful Web Services (PM2.1 and 2.2) ###
 
 ##### CustomerDB #####
 
-1- Run PM2CustomerDB REStful Web Service
-2- Run PM2CustoemrDB Client
-3- Navigate to `http://localhost:8080/PM2CustomerDBClient/pm2.html`
-4- Test Customer Table, Discount and FindByState
+1. Run PM2CustomerDB REStful Web Service
+2. Run PM2CustomerDB Client
+3. Navigate to `http://localhost:8080/PM2CustomerDBClient/pm2.html`
+4. Test Customer Table, Discount and FindByState
 
 ##### Temperature #####
 
-1- Run PM2Temperature Project
-3- Navigate to `http://localhost:8080/PM2Temperature/pm2_2_c.html`
-4- Test GET and PUT actions
+1. Run PM2Temperature Project
+2. Navigate to `http://localhost:8080/PM2Temperature/pm2_2_c.html`
+3. Test GET and PUT actions
+
+### Testing StreamAlert for alerts, Facebook, Github, etc.(PM2.3) ###
 
 ### Contribution guidelines ###
 
