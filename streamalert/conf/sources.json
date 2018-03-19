@@ -20,7 +20,14 @@
         "neural-network",
         "marfcat-input",
         "marfcat-output",
-        "le-devoir"
+        "le-devoir",
+        "github_feeds",
+        "alert",
+        "github_issue",
+        "facebook_feeds",
+        "splints_feeds",
+        "wscgen_feeds",
+        "facebook_single_feed"
       ]
     }
   },
