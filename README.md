@@ -116,6 +116,62 @@ When sending a POST request for any of the supported types, an upload of resourc
 3. Test GET and PUT actions
 
 ### Testing StreamAlert for alerts, Facebook, Github, etc.(PM2.3) ###
+All output can be found the our repository's Slack Channel
+
+##### GET on GitHub user feeds #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/feeds` with Basic Authentication headers for GitHub.
+
+##### PUT and POST on /alert #####
+Using Postman or cURL, send a HTTP POST or PUT request to `http://localhost:8000/StreamAlert/alert` with a Content-Type header of type `application/json` or `application/xml`.
+
+JSON:
+```
+{
+  "title": "string",
+  "message: "string"
+}
+```
+
+XML:
+```
+<alert>
+  <title></title>
+  <message></message>
+</alert>
+```
+
+##### GET /pull/github/repo/issue #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/pull/github/{username}/{repository}/{issue-id}`
+
+URI Path:
+```
+username: string
+repository: string
+issue-id: integer
+```
+
+##### GET /pull/facebook/account #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/pull/facebook/{account-id}` with a valid Facebook Graph API `access_token` header.
+
+To find your account-id and access token, visit: https://developers.facebook.com/tools/explorer/
+
+URI Path:
+```
+account-id: integer
+```
+
+##### GET latest team feed: splints #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/splints`.
+
+##### GET latest team feed: wscgen #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/wscgen`.
+
+##### GET feed from from https://www.facebook.com/cciff.ca #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/cciff` with a valid Facebook Graph API `access_token` header.
+
+##### GET feed from from https://www.facebook.com/canadachinaarttech #####
+Using Postman or cURL, send a HTTP GET request to `http://localhost:8000/StreamAlert/canadaChinaArtTech` with a valid Facebook Graph API `access_token` header.
+
 
 ### Contribution guidelines ###
 
